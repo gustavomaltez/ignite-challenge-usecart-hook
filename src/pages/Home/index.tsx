@@ -5,7 +5,6 @@ import { api } from '../../services/api';
 import { useCart } from '../../hooks/useCart';
 import Product from '../../components/Product';
 import { formatPrice } from '../../util/format';
-import { size } from 'polished';
 
 interface Product {
   id: number;
