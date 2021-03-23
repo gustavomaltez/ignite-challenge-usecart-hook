@@ -21,7 +21,8 @@ interface CartItemProps {
 
 const CartItem = ({ data: { amount, id, image, price, title } }: CartItemProps): JSX.Element => {
     
-    const {updateProductAmount} = useCart();
+    const {updateProductAmount, removeProduct} = useCart();
+
     function handleProductIncrement() {
         updateProductAmount({productId: id, amount: amount + 1});
     }
@@ -31,7 +32,7 @@ const CartItem = ({ data: { amount, id, image, price, title } }: CartItemProps):
     }
 
     function handleRemoveProduct() {
-        // TODO
+        removeProduct(id);
     }
 
     return (
