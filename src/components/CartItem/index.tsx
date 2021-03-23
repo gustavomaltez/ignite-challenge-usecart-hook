@@ -39,7 +39,7 @@ const CartItem = ({ data: { amount, id, image, price, title } }: CartItemProps):
                     <img src={image} alt={title} />
                 </td>
                 <td>
-                    <strong>Tênis de Caminhada Leve Confortável</strong>
+                    <strong>{title}</strong>
                     <span>{formatPrice(price)}</span>
                 </td>
                 <td>
@@ -56,7 +56,7 @@ const CartItem = ({ data: { amount, id, image, price, title } }: CartItemProps):
                             type="text"
                             data-testid="product-amount"
                             readOnly
-                            value={2}
+                            value={amount}
                         />
                         <button
                             type="button"

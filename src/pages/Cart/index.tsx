@@ -5,8 +5,6 @@ import { formatPrice } from '../../util/format';
 
 import { Container, ProductTable, Total } from './styles';
 
-
-
 const Cart = (): JSX.Element => {
   const { cart } = useCart();
 
@@ -16,9 +14,6 @@ const Cart = (): JSX.Element => {
         return sumTotal + (product.price * product.amount);
       }, 0)
     )
-
-  
-
   return (
     <Container>
       <ProductTable>

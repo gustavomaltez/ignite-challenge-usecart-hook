@@ -33,39 +33,67 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   });
 
   const addProduct = async (productId: number) => {
-    try {
-    
-    } catch {
-      toast.error('Erro na adição do produto');
-    }
-  };
 
-  const removeProduct = (productId: number) => {
     try {
-      // TODO
-    } catch {
-      toast.error('Erro na remoção do produto');
-    }
-  };
 
-  const updateProductAmount = async ({
-    productId,
-    amount,
-  }: UpdateProductAmount) => {
-    try {
-      // TODO
-    } catch {
-      toast.error('Erro na alteração de quantidade do produto');
-    }
-  };
+      const { data: productStock } = await api.get<Stock>(`/stock/${productId}`);
 
-  return (
-    <CartContext.Provider
-      value={{ cart, addProduct, removeProduct, updateProductAmount }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+      const product = cart.find(product => product.id === productId);
+
+      const productAmmount = product?.amount || 0;
+
+      if(productAmmount + 1 > productStock.amount) {
+        toast.error('Quantidade solicitada fora de estoque');
+        return;
+      }
+
+      let updatedCart: Product[];
+
+      if (!product) {
+        const { data: productData } = await api.get<Product>(`/products/${productId}`);
+        updatedCart = [ ...cart, { ...productData, amount: 1}];
+      }else{
+        updatedCart = cart.map(item => {
+          if(item.id === productId){
+            item.amount++;
+          }
+          return item;
+        })
+      }
+
+      setCart(updatedCart);
+      localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart));
+    } catch {
+    toast.error('Erro na adição do produto');
+  }
+};
+
+const removeProduct = (productId: number) => {
+  try {
+    // TODO
+  } catch {
+    toast.error('Erro na remoção do produto');
+  }
+};
+
+const updateProductAmount = async ({
+  productId,
+  amount,
+}: UpdateProductAmount) => {
+  try {
+    // TODO
+  } catch {
+    toast.error('Erro na alteração de quantidade do produto');
+  }
+};
+
+return (
+  <CartContext.Provider
+    value={{ cart, addProduct, removeProduct, updateProductAmount }}
+  >
+    {children}
+  </CartContext.Provider>
+);
 }
 
 export function useCart(): CartContextData {
