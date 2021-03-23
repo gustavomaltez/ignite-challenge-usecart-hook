@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { ProductList } from './styles';
 import { api } from '../../services/api';
-import { formatPrice } from '../../util/format';
 import { useCart } from '../../hooks/useCart';
 import Product from '../../components/Product';
+import { formatPrice } from '../../util/format';
 
 interface Product {
   id: number;
@@ -34,7 +34,7 @@ const Home = (): JSX.Element => {
       const response = await api.get('/products');
       const productsResponse = response.data;
       const productsFormated = productsResponse.map(
-        (product: Product) => ({ ...product, priceFormatted: String(product.price) })
+        (product: Product) => ({ ...product, priceFormatted: formatPrice(product.price) })
       );
       setProducts(productsFormated)
     }

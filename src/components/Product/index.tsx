@@ -1,7 +1,4 @@
 import { MdAddShoppingCart } from 'react-icons/md';
-import { formatPrice } from '../../util/format';
-
-
 
 interface ProductFormatted {
   id: number;
@@ -24,7 +21,7 @@ const Product = ({data: {id, image, price, title, priceFormatted}}: ProductProps
         <li>
         <img src={image} alt={title} />
         <strong>{title}</strong>
-        <span>{formatPrice(price)}</span>
+        <span>{priceFormatted}</span>
         <button
           type="button"
           data-testid="add-product-button"
